@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "Press Ctrl+C any time to stop the application."
-#network 
-docker network connect mynet city 
+#network  docker network connect mynet citymatcher 
+
 echo
 
 for i in $(seq 2); do
