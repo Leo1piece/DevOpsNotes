@@ -8,7 +8,7 @@ docker build -t jr/console-citymatcher .
 
 echo
 echo "Running container ..."
-docker run --link citymatcher --rm jr/console-citymatcher
+docker run  --network mynet --network-alias console  --rm jr/console-citymatcher
 
 echo "Cleaning up ..."
 docker kill $(docker ps -q)
