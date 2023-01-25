@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git checkout') {
+            steps{
+                // Get source code from a GitHub repository
+            }
+        }
+        
+        stage('Build') {
+            steps{
+                // Do your build task
+            }
+        }
+        
+        stage('Test') {
+            steps{
+                // Run unit tests, integration tests, and/or e2e tests
+            }
+        }
+        
+        stage('Publish') {
+            steps{
+                // Publish your artifacts to somewhere.
+                // However, in our hands-on, you just need to print the artifact list by Linux command 'ls -la'
+            }
+        }
+    }
+
+    post {
+        always { 
+            echo 'I am leo ,this is post blocks'
+        }
+    }
+}

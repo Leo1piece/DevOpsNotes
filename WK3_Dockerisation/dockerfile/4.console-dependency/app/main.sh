@@ -2,7 +2,7 @@
 
 echo "Press Ctrl+C any time to stop the application."
 echo "docker network connect mynet citymatcher  ..."
- docker network connect mynet citymatcher 
+ 
 
 echo
 
