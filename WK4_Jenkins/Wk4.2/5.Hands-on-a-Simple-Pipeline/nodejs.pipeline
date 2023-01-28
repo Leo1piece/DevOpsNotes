@@ -1,0 +1,64 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Git checkout') {
+            steps{
+                // Get source code from a GitHub repository
+                git branch:'main',url:'https://github.com/Leo1piece/openhack-devops-team.git'
+                echo 'pull git repo success!....'
+            }
+        }
+        
+      
+
+         stage('npm install') {
+            steps{
+                echo 'npm install ....'
+                dir('./apis/userprofile/') {
+                    sh 'npm install'   
+                    //sh 'mvn spring-boot:run'
+            
+
+                }
+            }
+        }
+        
+        stage('Tests') {
+            steps{
+               dir('./apis/userprofile/') {   
+                    sh 'npm run test'
+                    //sh 'dotnet test ./IntegrationTests/IntegrationTests.csproj'
+                }
+                // Run unit tests, integration tests, and/or e2e tests
+            }
+        }
+
+         stage('Cover') {
+            steps{
+               dir('./apis/userprofile/') {   
+                    sh 'npm run cover'
+                    //sh 'dotnet test ./IntegrationTests/IntegrationTests.csproj'
+                }
+                // Run unit tests, integration tests, and/or e2e tests
+            }
+        }
+        
+        stage('Publish') {
+            steps{
+              dir('./apis/userprofile/') {
+                 sh 'ls -la'
+              }
+                
+                // Publish your artifacts to somewhere.
+                // However, in our hands-on, you just need to print the artifact list by Linux command 'ls -la'
+            }
+        }
+    }
+
+    post {
+        always { 
+            echo 'I will always say Hello again!'
+        }
+    }
+}
