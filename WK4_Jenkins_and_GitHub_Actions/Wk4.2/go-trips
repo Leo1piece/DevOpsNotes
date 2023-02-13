@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+
+
+    stages {
+
+
+        stage('Git checkout') {
+            steps{
+            git branch:'main', url:'https://github.com/RayMaAU/openhack-devops-team.git'
+                }
+        }
+        
+        stage('get') {
+            steps{
+                dir('./apis/trips/') {
+                    sh '/usr/local/go/bin/go get -d' 
+                    }
+            }
+        }
+
+        stage('Build') {
+            steps{
+
+                dir('./apis/trips/') {
+                    sh '/usr/local/go/bin/go build -o main .'
+                    }
+
+                
+            }
+        }
+
+        
+        stage('Test') {
+            steps{
+                    dir('./apis/trips/tripsgo/') {
+                        sh '/usr/local/go/bin/go test -run Unit'
+                    }
+
+                // Run unit tests, integration tests, and/or e2e tests
+            }
+        }
+        
+        stage('Publish') {
+            steps{
+                sh 'ls -la'
+            }
+        }
+    }
+
+    post {
+        always { 
+            echo 'I will always say Hello again!'
+        }
+    }
+    
+}

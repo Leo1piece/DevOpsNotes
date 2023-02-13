@@ -97,7 +97,7 @@ docker run --name jenkins \
            -v /var/run/docker.sock:/var/run/docker.sock \
            -p 80:8080 \
            -p 50000:50000 \
-           jenkinsci/blueocean
+           jenkins/jenkins:lts-jdk11
 ```
 
 > Note:
