@@ -12,7 +12,7 @@
 - Create a new resource `/lookup` in the API, and support following when the API gets a GET request on `/lookup`:
     - the API expects one required body attribute `name`, and return all matched records (case insensitive) from dynamodb that matches the input name.
 
-3. HelloWorld API extention: Deploy your API using SAM
+3. (Optional) HelloWorld API extention: Deploy your API using SAM
 
 You have been using AWS console to create and update your API Gateway and Lambda function.
 

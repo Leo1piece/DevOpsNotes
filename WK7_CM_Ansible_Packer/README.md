@@ -82,6 +82,9 @@ ansible tag_redis -i ../inventory.aws_ec2.yaml -u ubuntu -m ansible.builtin.copy
 
 ansible tag_redis -i ../inventory.aws_ec2.yaml -u ubuntu -a "cat /tmp/hosts"
 
+# gathering facts
+ansible all -i ../inventory.aws_ec2.yaml -u ubuntu -m setup
+
 ```
 
 about inventory: https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html
@@ -98,16 +101,32 @@ all modules: https://docs.ansible.com/ansible/latest/collections/index_module.ht
 
 Let's write a playbook to do the following
 
-* install redis (apt-get update && apt-get install redis)
-* start redis server (systemtcl start redis.service)
+* Install nginx service and config the index page
+
+The `site.yaml` in the repo is for your reference, please follow the instructions in the course video.
 
 ```bash
-
-ansible-playbook -i ../inventory.aws_ec2.yaml site.yaml
-ansible tag_redis -i ../inventory.aws_ec2.yaml -u ubuntu -a "systemctl status redis"
-
-
+ansible-playbook -e name=Liji -i ../inventory.aws_ec2.yaml site.yaml
 ```
+
+In this section, we learn
+
+* simple task
+    * install service
+    * configure service
+    * service status
+* variable
+  * default value
+  * injected value
+* debug
+* facts
+* output and register
+* condition
+
+
+about variables: https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#simple-variables
+
+
 
 ## Task #6: Install a docker role from galaxy to your local laptop
 ```

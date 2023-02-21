@@ -2,9 +2,9 @@
 
 ## The Scenario
 
-In this example, you use a Node.js modules to write one item in a DynamoDB table by using these methods of the `AWS.DynamoDB` client class:
+In this example, you use a Node.js modules to write one item in a DynamoDB table by using these methods of the `PutItemCommand` client class:
 
--   [putItem](https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property)
+-   [PutItemCommand]([https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/DynamoDB.html#putItem-property](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/clients/client-dynamodb/classes/putitemcommand.html#constructor))
 
 ## Create a DynamoDB table
 
@@ -25,31 +25,33 @@ In this example, you use a Node.js modules to write one item in a DynamoDB table
 1. Add following code to the start your `GetStartedLambdaProxyIntegration` Lambda Function.
 
 ```
+
 // Load the AWS SDK for Node.js
-var AWS = require('aws-sdk');
-AWS.config.update({region: 'ap-southeast-2'})
-
-
+import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 // Create the DynamoDB service object
-var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+const client = new DynamoDBClient({
+  region: "ap-southeast-2"
+});
+
 ```
 2. Add following code before the return statement of your `GetStartedLambdaProxyIntegration` Lambda Function.
 ```
-let params = {
+    let params = {
       TableName: 'HelloWorldTable',
       Item: {
         'name' : {S: name},
         'city' : {S: city}
       }
     };
-    let ddbResponse = await ddb.putItem(params, function(err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Success", data);
-      }
-    }).promise();
-    console.log('ddbResponse', ddbResponse)
+    console.log("params: ", params)
+    const putItemCommand = new PutItemCommand(params); 
+
+    try {
+        const data = await client.send(putItemCommand);
+        console.log("Item added successfully:", JSON.stringify(data, null, 2));
+      } catch (err) {
+        console.error("Error adding item:", err);
+    };
  ```
 
 ## Test that you are successfully writing to DynamoDB table
